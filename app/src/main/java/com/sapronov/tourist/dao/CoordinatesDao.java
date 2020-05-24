@@ -19,6 +19,6 @@ public interface CoordinatesDao {
     @Query("SELECT * FROM coordinates")
     Maybe<List<Coordinates>> getAllCoordinates();
 
-    @Query("SELECT id FROM coordinates WHERE id = :id")
-    long getId(long id);
+    @Query("SELECT * FROM coordinates WHERE id = :id")
+    Coordinates getId(long id);
 }

@@ -6,10 +6,15 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Coordinates {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private double latitude;
     private double longitude;
+
+    public Coordinates(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
 
     public long getId() {

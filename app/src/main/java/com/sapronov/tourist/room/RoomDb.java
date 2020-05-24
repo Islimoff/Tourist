@@ -1,6 +1,7 @@
 package com.sapronov.tourist.room;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.room.Room;
 
@@ -19,8 +20,10 @@ public class RoomDb {
 
     private MyDatabase myDatabase;
     private static RoomDb roomDb;
+    private Context context;
 
     private RoomDb(Context context) {
+        this.context = context;
         myDatabase = Room.databaseBuilder(context,
                 MyDatabase.class, "populus-database")
                 .allowMainThreadQueries()
@@ -38,9 +41,10 @@ public class RoomDb {
         Single.fromCallable(() -> myDatabase.getCoordinatesDao().getId(coordinates.getId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<Long>() {
+                .subscribe(new DisposableSingleObserver<Coordinates>() {
+
                     @Override
-                    public void onSuccess(Long aLong) {
+                    public void onSuccess(Coordinates coordinates) {
 
                     }
 
@@ -50,6 +54,7 @@ public class RoomDb {
                             @Override
                             public void run() {
                                 myDatabase.getCoordinatesDao().insertCoordinates(coordinates);
+//                                    Toast.makeText(context,"fe"+l,Toast.LENGTH_SHORT).show();
                             }
                         })
                                 .subscribeOn(Schedulers.io())
